@@ -15,5 +15,5 @@ services:
       dockerfile: redis_python.Dockerfile
     image: redis_py3:latest
     container_name: redis-publisher
-    entrypoint: python redis_pub.py
+    entrypoint: ["python", "redis_pub.py"]
 

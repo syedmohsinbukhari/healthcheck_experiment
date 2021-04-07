@@ -1,6 +1,16 @@
 from time import sleep
 
-while True:
-    sleep(1)
-    print(1)
+
+def main():
+    i = 0
+    while True:
+        print(i, flush=True)
+        sleep(1)
+        i += 1
+        if i > 60:
+            break
+
+
+if __name__ == '__main__':
+    main()
 
