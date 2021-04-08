@@ -1,4 +1,4 @@
-version: '3.3'
+version: "3.4"
 
 services:
   redis:
@@ -12,8 +12,26 @@ services:
   redis-publisher:
     build:
       context: .
-      dockerfile: redis_python.Dockerfile
-    image: redis_py3:latest
+      dockerfile: redis_publisher.Dockerfile
+    image: redis_pub:latest
     container_name: redis-publisher
+    depends_on:
+        - redis
     entrypoint: ["python", "redis_pub.py"]
+    healthcheck:
+      test: ["CMD", "python", "/check_pub.py"]
+      interval: 5s
+      timeout: 5s
+      retries: 1
+      start_period: 5s
+
+  redis-subscriber:
+    build:
+      context: .
+      dockerfile: redis_subscriber.Dockerfile
+    image: redis_sub:latest
+    container_name: redis-subscriber
+    depends_on:
+        - redis
+    entrypoint: ["python", "redis_sub.py"]
 
